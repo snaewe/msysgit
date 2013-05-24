@@ -77,9 +77,8 @@ Name: consolefont; Description: Use a TrueType font in all console windows (not 
 [Files]
 ; Install files that might be in use during setup under a different name.
 Source: git-cheetah\git_shell_ext.dll; DestDir: {app}\git-cheetah; DestName: git_shell_ext.dll.new; Flags: replacesameversion; Components: ext\cheetah; AfterInstall: DeleteFromVirtualStore
-Source: git-cheetah\git_shell_ext64.dll; DestDir: {app}\git-cheetah; DestName: git_shell_ext64.dll.new; Flags: replacesameversion; Components: ext\cheetah; AfterInstall: DeleteFromVirtualStore
 
-Source: *; DestDir: {app}; Excludes: \*.bmp, gpl-2.0.rtf, \*.iss, \tmp.*, \bin\*install*, \git-cheetah\git_shell_ext.dll, \git-cheetah\git_shell_ext64.dll; Flags: recursesubdirs replacesameversion sortfilesbyextension; AfterInstall: DeleteFromVirtualStore
+Source: *; DestDir: {app}; Excludes: \*.bmp, gpl-2.0.rtf, \*.iss, \tmp.*, \bin\*install*, \git-cheetah\git_shell_ext.dll; Flags: recursesubdirs replacesameversion sortfilesbyextension; AfterInstall: DeleteFromVirtualStore
 Source: ReleaseNotes.rtf; DestDir: {app}; Flags: isreadme replacesameversion; AfterInstall: DeleteFromVirtualStore
 
 [Icons]
@@ -300,12 +299,11 @@ begin
 
     // Use the Restart Manager API when installing the shell extension on Windows Vista and above.
     if Version.Major>=6 then begin
-        SetArrayLength(Modules,5);
+        SetArrayLength(Modules,4);
         Modules[0]:=ExpandConstant('{app}\bin\msys-1.0.dll');
         Modules[1]:=ExpandConstant('{app}\bin\tcl85.dll');
         Modules[2]:=ExpandConstant('{app}\bin\tk85.dll');
         Modules[3]:=ExpandConstant('{app}\git-cheetah\git_shell_ext.dll');
-        Modules[4]:=ExpandConstant('{app}\git-cheetah\git_shell_ext64.dll');
         SessionHandle:=FindProcessesUsingModules(Modules,Processes);
     end else begin
         SetArrayLength(Modules,3);
@@ -314,9 +312,8 @@ begin
         Modules[2]:=ExpandConstant('{app}\bin\tk85.dll');
         SessionHandle:=FindProcessesUsingModules(Modules,ProcsCloseRequired);
 
-        SetArrayLength(Modules,2);
+        SetArrayLength(Modules,1);
         Modules[0]:=ExpandConstant('{app}\git-cheetah\git_shell_ext.dll');
-        Modules[1]:=ExpandConstant('{app}\git-cheetah\git_shell_ext64.dll');
         SessionHandle:=FindProcessesUsingModules(Modules,ProcsCloseOptional) or SessionHandle;
 
         // Misuse the "Restartable" flag to indicate which processes are required
@@ -1167,11 +1164,7 @@ begin
     if IsComponentSelected('ext\cheetah') then begin
         DeleteContextMenuEntries;
 
-        if isWin64 then begin
-            FileName:=AppDir+'\git-cheetah\git_shell_ext64.dll';
-        end else begin
-            FileName:=AppDir+'\git-cheetah\git_shell_ext.dll';
-        end;
+        FileName:=AppDir+'\git-cheetah\git_shell_ext.dll';
         if not ReplaceInUseFile(FileName,FileName+'.new',True,Msg) then begin
             // This is in fact a critical error, but "Abort" does not work during ssPostInstall anymore and
             // we have no other way of aborting the installation, so just notify the user and continue.
@@ -1410,11 +1403,7 @@ begin
 
     DeleteContextMenuEntries;
 
-    if isWin64 then begin
-        FileName:=AppDir+'\git-cheetah\git_shell_ext64.dll';
-    end else begin
-        FileName:=AppDir+'\git-cheetah\git_shell_ext.dll';
-    end;
+    FileName:=AppDir+'\git-cheetah\git_shell_ext.dll';
     if FileExists(FileName) then begin
         if not UnregisterServer(Is64BitInstallMode,FileName,False) then begin
             Msg:='Line {#__LINE__}: Unable to unregister file "'+FileName+'". Please do it manually by running "regsvr32 /u '+ExtractFileName(FileName)+'".';
