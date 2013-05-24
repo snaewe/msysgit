@@ -83,11 +83,8 @@ test "$do_compile" && {
 			make install INSTALL=/bin/install prefix=) &&
 		(cd git/contrib/credential/wincred &&
 			make install INSTALL=/bin/install prefix=) &&
-		/src/mingw-w64/release-easy.sh &&
-		/src/mingw-w64/release-zlib.sh &&
 		(cd src/git-cheetah/explorer/ &&
-		 make objects-clean && make &&
-		 make objects-clean && make W64=1)
+		 make objects-clean && make)
 	} || exit 1
 }
 
