@@ -20,7 +20,7 @@
 Compression=lzma2/ultra
 LZMAUseSeparateProcess=yes
 OutputBaseFilename={#APP_NAME+'-'+APP_VERSION}
-OutputDir={#GetEnv('USERPROFILE')}
+OutputDir={#GetEnv('HOME')}
 SolidCompression=yes
 #ifdef COMPILE_FROM_IDE
 SourceDir={#GetEnv('TEMP')}\WinGit
