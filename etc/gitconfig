@@ -1,6 +1,7 @@
 [core]
 	symlinks = false
 [color]
+	ui = auto
 	diff = auto
 	status = auto
 	branch = auto
