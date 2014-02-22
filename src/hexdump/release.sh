@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-VERSION=1.7
+VERSION=1.8
 DIR=hexdump-$VERSION
 URL=http://catb.org/~esr/hexdump/$DIR.tar.gz
 FILE=${URL##*/}
