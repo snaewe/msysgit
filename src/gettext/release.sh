@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-VERSION=0.18.1.1
+VERSION=0.18.3
 DIR=gettext-$VERSION
 URL=http://ftp.gnu.org/pub/gnu/gettext/$DIR.tar.gz
 FILE=${URL##*/}
