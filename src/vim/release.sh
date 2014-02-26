@@ -32,14 +32,14 @@ test -d $DIR || {
 
 cd $DIR/src &&
 make -f Make_ming.mak clean &&
-make -f Make_ming.mak GUI=no vim.exe &&
+make -f Make_ming.mak GUI=no vim.exe vimrun.exe xxd/xxd.exe &&
 make -f Make_ming.mak GUI=yes gvim.exe &&
 INDEX=$(/share/msysGit/pre-install.sh) &&
 rm -rf /share/vim/vim[0-9]* &&
 VIM_VERSION=$(sed -n 's/.*VIM_VERSION_NODOT	"\(.*\)".*/\1/p' < version.h) &&
 SHARE=/share/vim/$VIM_VERSION &&
 cp -R ../runtime $SHARE &&
-cp gvim.exe vim.exe $SHARE/ &&
+cp gvim.exe vim.exe vimrun.exe xxd/xxd.exe $SHARE/ &&
 cat > /bin/vi << EOF &&
 #!/bin/sh
 
